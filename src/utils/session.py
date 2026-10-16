@@ -18,6 +18,7 @@ def init_session_state() -> None:
         "answers": {},
         "quiz_completed": False,
         "results": None,
+        "quiz_started": False,
     }
     
     for key, value in defaults.items():
@@ -35,6 +36,7 @@ def reset_quiz(keep_lang: bool = True) -> None:
     state["quiz_completed"] = False
     state["results"] = None
     state["lang"] = lang
+    state["quiz_started"] = False
 
 
 def get_current_question_index() -> int:
@@ -79,6 +81,18 @@ def set_quiz_completed(completed: bool = True) -> None:
     """Mark quiz as completed."""
     state = _get_state()
     state["quiz_completed"] = completed
+
+
+def is_quiz_started() -> bool:
+    """Check if quiz has started."""
+    state = _get_state()
+    return state.get("quiz_started", False)
+
+
+def set_quiz_started(started: bool = True) -> None:
+    """Mark quiz as started."""
+    state = _get_state()
+    state["quiz_started"] = started
 
 
 def set_results(results: Dict[str, Any]) -> None:

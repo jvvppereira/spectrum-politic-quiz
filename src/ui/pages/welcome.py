@@ -1,6 +1,6 @@
 import streamlit as st
 from src.ui.components import render_welcome_page, render_language_selector, inject_custom_css
-from src.utils.session import init_session_state
+from src.utils.session import init_session_state, set_quiz_started
 
 
 def render_welcome() -> None:
@@ -12,4 +12,5 @@ def render_welcome() -> None:
     if render_welcome_page():
         from src.utils.session import reset_quiz
         reset_quiz(keep_lang=True)
+        set_quiz_started(True)
         st.rerun()
