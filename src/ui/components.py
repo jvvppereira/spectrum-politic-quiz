@@ -362,6 +362,93 @@ def render_result_bar(
     """, unsafe_allow_html=True)
 
 
+def render_answers_summary(answers: dict, lang: str) -> None:
+    """Render a summary of all answers with color coding."""
+    from src.core.questions import QUESTIONS
+    from src.core.i18n import get_text
+    
+    st.markdown("""
+    <style>
+    .answer-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.5rem;
+        background: #f9fafb;
+        border-radius: 8px;
+        border-left: 4px solid #e5e7eb;
+    }
+    .answer-item.left {
+        border-left-color: #dc2626;
+    }
+    .answer-item.right {
+        border-left-color: #3b82f6;
+    }
+    .answer-num {
+        font-weight: 600;
+        color: #6b7280;
+        min-width: 2.5rem;
+        margin-right: 1rem;
+    }
+    .answer-text {
+        flex: 1;
+        color: #1f2937;
+        font-size: 0.9375rem;
+    }
+    .answer-label {
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .answer-label.left {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+    .answer-label.right {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+    .answers-header {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 2rem 0 1rem 0;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    st.markdown('<div class="answers-header">Suas Respostas</div>', unsafe_allow_html=True)
+    
+    for q in QUESTIONS:
+        qid = q["id"]
+        answer = answers.get(qid)
+        if answer is None:
+            continue
+        
+        theme = get_text(q["theme_key"], lang)
+        if answer == 0:
+            # Right (blue)
+            label = get_text(q["right_key"], lang)
+            label_class = "right"
+            item_class = "right"
+        else:
+            # Left (red)
+            label = get_text(q["left_key"], lang)
+            label_class = "left"
+            item_class = "left"
+        
+        st.markdown(f"""
+        <div class="answer-item {item_class}">
+            <span class="answer-num">Q{qid}</span>
+            <span class="answer-text">{theme}</span>
+            <span class="answer-label {label_class}">{label}</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+
 def render_methodology_footer() -> None:
     """Render methodology footer with credits."""
     from src.core.i18n import t

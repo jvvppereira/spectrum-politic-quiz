@@ -4,13 +4,15 @@ from src.ui.components import (
     render_result_bar,
     render_language_selector,
     render_methodology_footer,
-    inject_custom_css
+    inject_custom_css,
+    render_answers_summary
 )
 from src.utils.session import (
     init_session_state,
     get_results,
     is_quiz_completed,
-    reset_quiz
+    reset_quiz,
+    get_all_answers
 )
 
 
@@ -77,6 +79,10 @@ def render_results() -> None:
         ),
         lang=lang
     )
+    
+    # Answers summary
+    answers = get_all_answers()
+    render_answers_summary(answers, lang)
     
     # Restart button
     col1, col2, col3 = st.columns([1, 2, 1])
