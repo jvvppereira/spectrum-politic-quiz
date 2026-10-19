@@ -28,14 +28,17 @@ def inject_custom_css() -> None:
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.2s;
+        color: #1f2937;
     }
     .stRadio label:hover {
         border-color: #3b82f6;
-        background-color: #eff6ff;
+        background-color: #3b82f6;
+        color: white;
     }
     .stRadio input:checked + label {
         border-color: #3b82f6;
-        background-color: #dbeafe;
+        background-color: #2563eb;
+        color: white;
         font-weight: 600;
     }
     
@@ -346,9 +349,9 @@ def render_result_bar(
                 <div class="result-bar-marker" style="left: {position_pct}%;"></div>
             </div>
             <div class="result-bar-labels">
-                <span>{get_text("classification_right", lang)}</span>
-                <span>{get_text("classification_center", lang)}</span>
                 <span>{get_text("classification_left", lang)}</span>
+                <span>{get_text("classification_center", lang)}</span>
+                <span>{get_text("classification_right", lang)}</span>
             </div>
         </div>
         <p class="explanation-text">{explanation}</p>
