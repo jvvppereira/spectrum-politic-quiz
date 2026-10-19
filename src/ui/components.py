@@ -327,8 +327,8 @@ def render_result_bar(
     """Render a horizontal result bar with marker and explanation."""
     from src.core.i18n import get_text
     
-    # Calculate position percentage
-    position_pct = (score / max_score) * 100 if max_score > 0 else 0
+    # Calculate position percentage (inverted: high score = left = 0%)
+    position_pct = (1 - score / max_score) * 100 if max_score > 0 else 0
     
     # Classification label
     class_label = get_text(f"classification_{classification}", lang)
