@@ -19,9 +19,12 @@ def inject_custom_css() -> None:
     .stRadio > div {
         flex-direction: row !important;
         gap: 1rem;
+        width: 100%;
     }
-    .stRadio label {
-        flex: 1;
+    .stRadio > div > label,
+    .stRadio [role="radiogroup"] > label {
+        flex: 1 1 0%;
+        width: 50%;
         text-align: center;
         padding: 1rem;
         border: 2px solid #e5e7eb;
@@ -29,6 +32,7 @@ def inject_custom_css() -> None:
         cursor: pointer;
         transition: all 0.2s;
         color: #1f2937;
+        box-sizing: border-box;
     }
     .stRadio label:hover {
         border-color: #3b82f6;
@@ -246,13 +250,9 @@ def render_question_card(question: dict, lang: str, selected: int | None) -> int
     
     st.markdown(f"""
     <div class="question-card">
-        <div class="question-theme">{get_text(question["theme_key"], lang)}</div>
         <div class="question-text">{get_text(question["theme_key"], lang)}</div>
     </div>
     """, unsafe_allow_html=True)
-    
-    # Actually show the question text, not theme twice
-    st.markdown(f'<div class="question-text">{get_text(question["theme_key"], lang)}</div>', unsafe_allow_html=True)
     
     options = {
         0: get_text(question["right_key"], lang),
